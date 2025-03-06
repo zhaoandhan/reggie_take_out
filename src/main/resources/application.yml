@@ -1,0 +1,39 @@
+#Spring Boot 的配置文件（如 application.yml 或 application.properties）用于 集中管理应用参数，实现以下目标：
+#不同环境（开发、测试、生产）使用不同配置，无需修改代码。例如：application-dev.yml：开发环境（本地数据库），application-prod.yml：生产环境（云数据库）。
+#调整参数（如端口号、数据库连接）时无需重新编译代码。
+#配置第三方库（如 MyBatis-Plus、Druid）的行为参数。
+#敏感信息（如密码）可通过外部配置（如 Vault、环境变量）注入，避免硬编码。
+server:
+  port: 8080
+  #指定 Spring Boot 应用的启动端口为 8080。若不配置，默认端口为 8080。
+spring:
+  application:
+    name: reggie_take_out
+    #定义应用名称
+  datasource:
+    druid:
+      #配置 Druid 连接池的数据库连接参数。
+      #serverTimezone=Asia/Shanghai：设置数据库时区，避免时间误差。
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      #driver-class-name：MySQL 8.x 及以上版本的 JDBC 驱动类。
+      url: jdbc:mysql://localhost:3306/reggie?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      #url：数据库连接字符串，包含关键参数：useUnicode=true&characterEncoding=utf-8：启用 UTF-8 编码，支持中文。useSSL=false：禁用 SSL 连接（生产环境建议启用并配置证书）。allowPublicKeyRetrieval=true：允许从客户端获取公钥（MySQL 8.0+ 需配置）
+      username: root
+      password: "xigua888"
+      #username 和 password：数据库账号密码
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射,自动将数据库字段 user_name 映射到 Java 属性 userName
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #在控制台输出 SQL 语句及参数，便于调试（生产环境建议关闭）
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+      #主键生成策略为“分配 ID”，默认使用雪花算法生成分布式唯一 ID
+reggie:
+  path: C:\Users\l\Desktop\work\reggie_take_out\src\main\resources\images\
+#定义文件上传到服务端时，服务端将文件保存的路径
+#启动时，Spring Boot 会加载 application.yml 中的数据库配置，创建 Druid 连接池。
+#MyBatis-Plus 根据配置生成 SqlSessionFactory，扫描 Mapper 接口。
+#Tomcat 启动后，监听 8080 端口，等待 HTTP 请求

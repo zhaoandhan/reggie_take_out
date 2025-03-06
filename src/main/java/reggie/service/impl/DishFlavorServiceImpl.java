@@ -1,0 +1,20 @@
+package reggie.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
+import reggie.entity.DishFlavor;
+import reggie.mapper.DishFlavorMapper;
+import reggie.service.DishFlavorService;
+
+/**
+ * ClassName:DishFlavorServiceImpl
+ * Package:
+ * Description:
+ *
+ * @Author 赵琪
+ * @Create 2025-03-03 16:28
+ * @Version 1.0
+ */
+@Service
+public class DishFlavorServiceImpl extends ServiceImpl<DishFlavorMapper, DishFlavor>implements DishFlavorService {
+}

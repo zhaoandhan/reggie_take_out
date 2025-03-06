@@ -1,0 +1,142 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId><!--  父项目继承，继承 Spring Boot 的默认配置（如依赖版本管理、插件配置），简化项目配置  -->
+    <version>2.4.5</version>
+    <relativePath/>
+    <!--  优先从本地查找父 POM，找不到再从仓库下载  -->
+  </parent>
+  <groupId>org.example</groupId><!--  组织或公司标识  -->
+  <artifactId>reggie_take_out</artifactId><!--  项目名称  -->
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version><!--  我的这个项目的版本  -->
+  <name>reggie_take_out Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId><!--  Spring Boot 核心依赖，Spring Boot 核心启动器，包含自动配置、日志、YAML 支持等基础功能  -->
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId><!--  Spring Boot 测试依赖，提供测试支持（如 JUnit、Mockito、Spring Test）  -->
+      <scope>test</scope><!--  表示仅在测试阶段生效  -->
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId><!--  Spring Boot Web 支持，构建 Web 应用，包含 Spring MVC 和嵌入式 Tomcat  -->
+      <scope>compile</scope><!--  默认作用域为 compile（编译和运行时均生效），此时可省略 <scope>  -->
+    </dependency>
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-boot-starter</artifactId><!--  MyBatis-Plus 集成，MyBatis-Plus 的 Spring Boot 集成，简化数据库操作（如 CRUD 接口、分页插件）  -->
+      <version>3.4.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId><!--  Lombok 代码简化，通过注解自动生成代码（如 @Data 生成 getter/setter，减少样板代码）  -->
+      <version>1.18.20</version>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId><!--  FastJSON 序列化库， 高性能 JSON 解析/生成库，常用于替代 Jackson。FastJSON 某些旧版本存在安全漏洞，建议升级到最新稳定版（如 2.x） -->
+      <version>1.2.76</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId><!--  Apache Commons Lang 工具库，提供常用工具类（如字符串处理、随机数生成）  -->
+      <version>2.6</version>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId><!--  MySQL 数据库驱动，MySQL JDBC 驱动，用于连接 MySQL 数据库  -->
+      <scope>runtime</scope><!--  表示仅在运行时生效，编译时不依赖  -->
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid-spring-boot-starter</artifactId><!--  Druid 数据库连接池，高性能数据库连接池，支持监控统计（如 SQL 性能分析、连接泄漏检测）。建议：升级到最新版本（如 1.2.8+）以修复旧版潜在问题
+        传统 JDBC 每次操作数据库需创建新连接，频繁的创建和销毁会消耗大量资源.
+        Druid 通过预创建并维护一组数据库连接（连接池），使用时直接从池中获取，用完后归还，减少连接创建的开销，提升性能。
+        自动回收长时间未归还的连接。记录 SQL 执行时间、次数、慢查询等，帮助优化数据库性能。内置 WallFilter，拦截危险 SQL 语句。提供连接池活跃数、等待时间等指标，便于运维。-->
+      <version>1.1.23</version>
+    </dependency>
+    <dependency>
+      <groupId>com.aliyun</groupId>
+      <artifactId>aliyun-java-sdk-core</artifactId>
+      <version>4.5.16</version>
+    </dependency>
+    <dependency>
+      <groupId>com.aliyun</groupId>
+      <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+      <version>2.1.0</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>reggie_take_out</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId><!--  Spring Boot Maven 插件，支持打包可执行 JAR（包含所有依赖），并优化启动性能  -->
+        <version>2.4.5</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+        <!--  Redis（Remote Dictionary Server）是一款开源的 内存数据库，支持高性能的键值存储，并提供多种数据结构（如字符串、哈希、列表、集合、有序集合等）。
+        将热点数据存储在内存中，减少对数据库的直接访问，提升系统响应速度。
+        通过 SETNX 命令实现跨进程/服务的互斥锁，解决并发竞争问题。典型场景：秒杀活动中防止超卖。
+        使用 List 或 Stream 数据结构实现轻量级消息队列。
+        支持发布订阅（Pub/Sub）模式，用于实时消息广播。典型场景：实时排行榜、在线用户状态更新。
+        支持 RDB（快照）和 AOF（日志）两种方式，确保数据安全。  -->
+
+        <!--  RocketMQ 是分布式消息中间件，设计目标是高吞吐、低延迟和高可用，适合金融级业务场景。
+        生产者和消费者通过消息队列解耦，提升系统扩展性。典型场景：订单支付成功后通知物流系统。
+        缓冲突发流量，避免后端服务被压垮。典型场景：双11大促期间订单排队处理。
+        保证消息按发送顺序被消费（如订单状态变更：创建→支付→发货）。
+        解决分布式事务问题，确保本地事务与消息发送的最终一致性。典型场景：跨服务转账（扣款与入账的原子性）。
+        自动处理消费失败的消息，避免数据丢失  -->
+
+        <!--  WebSocket 是一种基于 TCP 的 全双工通信协议，允许服务端和客户端建立持久连接，实现实时双向数据传输。
+        服务端可主动推送消息到客户端，无需客户端轮询。典型场景：在线聊天室、股票行情实时推送。
+        相比 HTTP 短连接，减少握手开销，提升传输效率。典型场景：多人协作文档编辑、在线游戏。
+        单连接复用，减少资源消耗（传统 HTTP 频繁建立/断开连接  -->
+
+        <!--  MyBatis 是一款优秀的 对象关系映射（ORM）框架，用于将 Java 对象与数据库表记录自动映射，简化数据库操作。其增强版 MyBatis-Plus（在您的 pom.xml 中已引入）进一步封装了通用 CRUD 方法，提升开发效率  -->
+
+        <!--  Spring 是一个轻量级的 Java 开发框架，核心功能是简化企业级应用开发，以下是其关键作用：
+        IoC 容器：管理对象的生命周期和依赖关系，开发者无需手动创建对象（如 Service、DAO）。
+        依赖注入：通过注解（如 @Autowired）或 XML 配置自动注入依赖，降低组件耦合度。
+        提供声明式事务管理（@Transactional），简化数据库事务操作（如回滚、提交）。
+        支持分布式事务（需整合 Seata 等框架）。
+        整合第三方组件，通过 Starter 依赖快速集成数据库（如 MyBatis、JPA）、缓存（Redis）、消息队列（RocketMQ）等。例如，在您的 pom.xml 中，Spring Boot 自动配置了 MyBatis-Plus 和 Druid 连接池。
+        Web 开发支持，提供 Spring MVC 模块，简化 RESTful API 开发（如 @RestController、@RequestMapping）。
+        支持参数校验（@Valid）、全局异常处理等。
+        Spring Boot 的自动配置（Auto-Configuration）根据依赖自动生成 Bean（如数据源、事务管理器）。通过 application.properties 或 application.yml 集中管理配置。  -->
+
+        <!--  分布式系统是由 多个独立节点（服务）协同工作 的系统，节点间通过网络通信，共同完成业务目标。例如，电商平台可能拆分为订单服务、库存服务、支付服务等。  -->
+
+        <!--  分布式系统的问题和用的技术：
+        服务间通信	      HTTP/RPC 框架	                  Spring Cloud OpenFeign、Dubbo
+        数据一致性	     分布式事务协议（如 TCC、Saga）	      Seata、RocketMQ 事务消息
+        服务发现与负载均衡	 注册中心 + 负载均衡器	              Nacos、Eureka、Ribbon
+        缓存与性能优化	     分布式缓存                         Redis、Memcached
+        消息异步处理	     消息队列	                      RocketMQ、Kafka  -->
+
+        <!--  RESTful 是一种基于 HTTP 协议的 API 设计规范，强调资源化（Resource-Oriented）和状态无关性（Stateless），广泛用于前后端分离架构。
+        使用 URL 表示资源，例如：GET /users：获取用户列表，POST /users：创建用户，PUT /users/{id}：更新指定用户，DELETE /users/{id}：删除用户
+        通过 HTTP 状态码反映操作结果，如 200（成功）、404（资源不存在）、500（服务器错误）。
+        通常使用 JSON 或 XML 传输数据。  -->
+
+        <!--  用户通过 RESTful API 发送订单请求 →
+        Spring 调用 OrderController（Bean）处理 →
+        OrderService（Bean）执行业务逻辑，通过 MyBatis 操作数据库 →
+        使用 RocketMQ 发送异步消息通知库存系统 →
+        Redis 缓存热门商品数据，减轻数据库压力  -->
