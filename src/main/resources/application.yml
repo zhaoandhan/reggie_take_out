@@ -8,9 +8,9 @@ server:
   #指定 Spring Boot 应用的启动端口为 8080。若不配置，默认端口为 8080。
 spring:
   redis:
+    #用redis记得打开那个本地的软件
     host: localhost
     port: 6379
-    password:
     database: 0
   application:
     name: reggie_take_out
