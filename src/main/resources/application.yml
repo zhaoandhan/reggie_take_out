@@ -12,6 +12,10 @@ spring:
     host: localhost
     port: 6379
     database: 0
+  cache:
+    redis:
+      time-to-live: 1800000
+      #表示缓存有30分钟有效期，是缓存数据的过期时间
   application:
     name: reggie_take_out
     #定义应用名称

@@ -1,11 +1,13 @@
 package reggie.common;
 
 import lombok.Data;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 //通用结果返回类，服务端响应的数据最终都会封装成此对象
 @Data
-public class R<T> {
+public class R<T> implements Serializable {//继承这个R类型的对象就可以序列化了
 
     private Integer code; //编码：1成功，0和其它数字为失败
 

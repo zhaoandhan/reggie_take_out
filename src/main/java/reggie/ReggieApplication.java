@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;//用lombok提供的一些注解编写实体类
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 //该注解在 Spring Boot 中用于启用对 Servlet 组件（如 @WebFilter、@WebServlet、@WebListener）的自动扫描和注册
 //Spring Boot 的自动配置主要针对 Spring 管理的 Bean（如 @Component、@Service），而 Servlet 组件（如 @WebFilter）属于 Java EE 标准，Spring Boot 默认不扫描这些注解。
 @EnableTransactionManagement
+@EnableCaching//开启spring cache缓存注解功能
 public class ReggieApplication {
     public static void main(String[] args) {
         SpringApplication.run(ReggieApplication.class,args);//springboot应用启动的入口代码，ReggieApplication.class指定主配置类，告诉spring从哪里开始加载配置，args可以指定端口号或其他配置，可以动态配置

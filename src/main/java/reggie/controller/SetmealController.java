@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 import reggie.common.R;
 import reggie.dto.SetmealDto;
@@ -42,6 +44,7 @@ public class SetmealController {
      * @return
      */
     @PostMapping
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> save(@RequestBody SetmealDto setmealDto){
         log.info("套餐信息：{}",setmealDto);
         setmealService.saveWithDish(setmealDto);
@@ -93,6 +96,8 @@ public class SetmealController {
      * @return
      */
     @DeleteMapping
+    @CacheEvict(value = "setmealCache",allEntries = true)//删除setmealCache下的所有缓存数据
+    //@CacheEvict将一条或多条数据从缓存中删除
     public R<String> delete(@RequestParam List<Long> ids){//当客户端通过URL传递参数时，可以使用@RequestParam将这些参数映射到方法的参数中
         log.info("ids:{}",ids);
         setmealService.removeWithDish(ids);
@@ -105,6 +110,9 @@ public class SetmealController {
      * @return
      */
     @GetMapping("/list")
+    @Cacheable(value = "setmealCache",key = "#setmeal.categoryId+'_'+#setmeal.status")
+    //@Cacheable在方法执行前spring先查看缓存中是否有数据，如果有数据，则直接返回缓存中数据，若没有，调用方法并将方法返回值放到缓存中
+    //value代表缓存的名称，因为要返回方法返回值，这里返回值类型是R<List<Setmeal>>，必须要让它实现序列化接口，不然无法缓存
     public R<List<Setmeal>> list(Setmeal setmeal){
         LambdaQueryWrapper<Setmeal> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(setmeal.getCategoryId()!=null,Setmeal::getCategoryId,setmeal.getCategoryId());
